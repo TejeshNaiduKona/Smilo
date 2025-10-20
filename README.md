@@ -29,12 +29,12 @@ Smilo is powered by **DeepFace** (CNN-based model) and supports **live emotion r
 | **Deep Learning / AI** | DeepFace (TensorFlow backend) |
 | **Web Framework** | Streamlit |
 | **API** | FastAPI |
-<-- | **Deployment** | Streamlit Cloud | -->
 
 ---
 
 📄 License
 
 MIT License © 2025 [Tejesh Naidu]
+
 
 
