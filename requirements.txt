@@ -1,0 +1,7 @@
+opencv-python
+deepface
+tensorflow
+streamlit
+plotly
+flask
+pandas
