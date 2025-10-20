@@ -4,58 +4,120 @@ from deepface import DeepFace
 import pandas as pd
 from datetime import datetime
 import os
-import numpy as np
+from streamlit.components.v1 import html
 
-st.set_page_config(page_title="Smilo", layout="wide")
-st.title("🎭 Smilo - Real-Time Emotion, Gender & Age Detection")
-st.markdown("Start the camera to detect your emotion, gender, and age in real time.")
+# -----------------------------
+# Page config
+# -----------------------------
+st.set_page_config(page_title="Smilo 🎭 Live Emotion Detection", layout="wide")
+st.markdown("""
+<style>
+/* Body background */
+body {
+    background-color: #f7f9fc;
+}
 
-# Checkbox to start/stop camera
-run = st.checkbox("Start Camera")
-FRAME_WINDOW = st.image([])
+/* Header card */
+.header-card {
+    background-color: #1f77b4;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 2px 2px 10px #aaa;
+}
 
-# Create logs folder
+/* Emotion cards */
+.emotion-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 2px 2px 8px #ccc;
+    text-align: center;
+    margin: 10px;
+}
+
+/* Webcam frame */
+.webcam-frame {
+    border: 5px solid #1f77b4;
+    border-radius: 12px;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# -----------------------------
+# Styled Header
+# -----------------------------
+st.markdown("""
+<div class='header-card'>
+    <h1>🎭 Smilo - Real-Time Emotion Detection</h1>
+    <p>Detect emotions live using AI + Webcam. Perfect for portfolio and demos.</p>
+</div>
+""", unsafe_allow_html=True)
+
+# -----------------------------
+# Prepare logs
+# -----------------------------
 #os.makedirs("logs", exist_ok=True)
-#csv_path = "logs/Smilo_log.csv"
+#csv_path = "logs/emotions_log.csv"
 #if not os.path.exists(csv_path):
-#    pd.DataFrame(columns=["timestamp", "emotion", "confidence", "gender", "age"]).to_csv(csv_path, index=False)
+#    pd.DataFrame(columns=["timestamp", "emotion", "confidence"]).to_csv(csv_path, index=False)
 
-# Open webcam
+# -----------------------------
+# Start Camera Checkbox
+# -----------------------------
+run = st.checkbox("Start Camera")
+FRAME_WINDOW = st.empty()  # Placeholder for webcam frame
+
+# Columns for Emotion Cards
+col1, col2, col3 = st.columns(3)
+
+# Initialize webcam
 camera = cv2.VideoCapture(0)
 
+# Emotion counters for cards
+emotion_counts = {"happy":0, "sad":0, "angry":0, "surprise":0, "neutral":0, "fear":0, "disgust":0}
+
+# -----------------------------
+# Webcam Loop
+# -----------------------------
 while run:
     ret, frame = camera.read()
     if not ret:
-        st.error("Cannot access camera")
+        st.error("Camera not detected.")
         break
 
     try:
-        # DeepFace analysis
-        result = DeepFace.analyze(frame, actions=['emotion','age','gender'], enforce_detection=False)
+        result = DeepFace.analyze(frame, actions=['emotion'], enforce_detection=False)
+        dominant_emotion = result[0]['dominant_emotion'].lower()
+        confidence = result[0]['emotion'][dominant_emotion]
 
-        dominant_emotion = result[0]['dominant_emotion']
-        emotion_confidence = result[0]['emotion'][dominant_emotion]
+        # Increment emotion count
+        if dominant_emotion in emotion_counts:
+            emotion_counts[dominant_emotion] += 1
 
-        predicted_gender = result[0]['gender']
-        predicted_age = result[0]['age']
-        age_min = int(predicted_age) - 3
-        age_max = int(predicted_age) + 3
-        age_range = f"{age_min}-{age_max}"
+        # Overlay emotion on frame
+        cv2.putText(frame, f"{dominant_emotion.capitalize()} ({confidence:.2f}%)", (50, 50),
+                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-        # Overlay text
-        text = f"{dominant_emotion} ({emotion_confidence:.0f}%), {predicted_gender}, Age: {age_range}"
-        cv2.putText(frame, text, (50,50), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2, cv2.LINE_AA)
-
-        # Log CSV
-        #log = pd.DataFrame([[datetime.now(), dominant_emotion, emotion_confidence, predicted_gender, predicted_age]],
-        #                   columns=["timestamp","emotion","confidence","gender","age"])
+        # Log to CSV
+        #log = pd.DataFrame([[datetime.now(), dominant_emotion, confidence]],
+        #                   columns=["timestamp", "emotion", "confidence"])
         #log.to_csv(csv_path, mode='a', header=False, index=False)
 
-    except Exception as e:
-        st.warning(f"Detection Error: {e}")
+    except:
+        pass
 
-    # Convert BGR → RGB
-    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    FRAME_WINDOW.image(frame_rgb)
+    # Display webcam frame with border
+    FRAME_WINDOW.image(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB), use_column_width=True)
 
-camera.release()
+    # -----------------------------
+    # Display Emotion Cards
+    # -----------------------------
+    for col, emotion in zip([col1, col2, col3], list(emotion_counts.keys())[:3]):
+        col.markdown(f"""
+        <div class='emotion-card'>
+            <h3>{emotion.capitalize()}</h3>
+            <h2>{emotion_counts[emotion]}</h2>
+        </div>
+        """, unsafe_allow_html=True)
