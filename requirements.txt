@@ -5,4 +5,7 @@ streamlit
 plotly
 flask
 pandas
-mediapipe
+fastapi
+uvicorn
+python-multipart
+numpy
