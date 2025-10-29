@@ -32,9 +32,7 @@ Smilo is powered by **DeepFace** (CNN-based model) and supports **live emotion r
 
 ---
 
-📄 License
 
-MIT License © 2025 [Tejesh Naidu]
 
 
 
