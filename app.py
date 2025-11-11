@@ -9,7 +9,7 @@ import os
 #csv_path = "logs/Smilo_log.csv"
 #if not os.path.exists(csv_path):
 #    pd.DataFrame(columns=["timestamp", "emotion", "confidence"]).to_csv(csv_path, index=False)
-
+ 
 # Start webcam
 cap = cv2.VideoCapture(0)
 print("Press 'q' to exit the webcam window...")
