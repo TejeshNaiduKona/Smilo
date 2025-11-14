@@ -20,7 +20,6 @@ async def predict_emotion(file: UploadFile = File("image.png")):
     contents = await file.read()
     npimg = np.frombuffer(contents, np.uint8)
     img = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
-
     try:
         result = DeepFace.analyze(img, actions=['emotion'], enforce_detection=False)
         dominant_emotion = result[0]['dominant_emotion']
