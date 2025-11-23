@@ -7,7 +7,7 @@ import numpy as np
 
 app = FastAPI(title="Smilo Emotion Detection API")
 
-# Allow CORS for frontend usage
+# Allow CORS for frontend usage 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
