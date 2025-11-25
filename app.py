@@ -4,7 +4,6 @@ import pandas as pd
 from datetime import datetime
 import os
 
-
 # Setup logs
 #os.makedirs("logs", exist_ok=True)
 #csv_path = "logs/Smilo_log.csv"
