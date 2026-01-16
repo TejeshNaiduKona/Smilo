@@ -1,6 +1,7 @@
 import cv2
 from deepface import DeepFace
 import pandas as pd
+import numpy as np
 from datetime import datetime
 import os
 
@@ -38,6 +39,7 @@ while True:
         #                   columns=["timestamp", "emotion", "confidence"])
         #log.to_csv(csv_path, mode='a', header=False, index=False)
 
+    
     except Exception as e:
         print("Error:", e)
 
