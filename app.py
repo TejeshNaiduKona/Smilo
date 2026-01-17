@@ -39,7 +39,6 @@ while True:
         #                   columns=["timestamp", "emotion", "confidence"])
         #log.to_csv(csv_path, mode='a', header=False, index=False)
 
-    
     except Exception as e:
         print("Error:", e)
 
