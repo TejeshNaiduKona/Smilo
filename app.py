@@ -1,7 +1,6 @@
 import cv2
 from deepface import DeepFace
 import pandas as pd
-import numpy as np
 from datetime import datetime
 import os
 
