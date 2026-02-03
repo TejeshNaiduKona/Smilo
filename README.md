@@ -1,11 +1,11 @@
-# Smilo - Real-Time Emotion Detection
+# Smilo😃 - Real-Time Emotion Detection
 
 A deep learning-based emotion detection system that uses Convolutional Neural Networks (CNN) to recognize facial expressions in real-time through a webcam feed.
 
 ## Features
 
 - **Real-time emotion detection** using webcam
-- **7 emotion classes**: Angry, Disgust, Fear, Happy, Neutral, Sad, Surprise
+- **7 emotion classes**: Angry😠, Disgust😐, Fear😨, Happy😃, Neutral🙂, Sad😔, Surprise😮
 - **CNN architecture** with PyTorch for accurate predictions
 - **Haar Cascade** face detection for efficient face localization
 - **Optimized inference** with frame skipping for better performance
@@ -31,16 +31,6 @@ cd Smilo
 ```bash
 pip install -r requirements.txt
 ```
-
-## Requirements
-
-- Python 3.8+
-- PyTorch 2.1.0
-- torchvision 0.16.0
-- OpenCV 4.8.1.78
-- NumPy 1.24.3
-- Pillow 10.0.0
-- matplotlib 3.7.2
 
 ## Dataset Structure
 
@@ -70,7 +60,7 @@ data/
 
 1. Prepare your dataset following the structure above
 2. Open and run `Train_model.ipynb` notebook:
-   - Configure CUDA settings
+   - Configure CUDA settings id available
    - Load and transform datasets
    - Train the model (default: 20 epochs)
    - Save the trained model as `face_classifier.pth`
@@ -111,7 +101,7 @@ The system will:
 ## Performance Optimization
 
 - Frame skipping (FRAME_SKIP=2) for faster processing
-- GPU acceleration support (CUDA)
+- CPU and GPU acceleration support (CUDA)
 - Efficient face detection with largest face selection
 
 ## License
