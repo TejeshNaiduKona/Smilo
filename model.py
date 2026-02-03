@@ -3,8 +3,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import pickle
 from torchvision import transforms
-from PIL import Image
 import numpy as np
+from PIL import Image
 
 
 class FaceClassifier(nn.Module):
@@ -16,7 +16,7 @@ class FaceClassifier(nn.Module):
         self.pool = nn.MaxPool2d(2, 2)
         self.dropout = nn.Dropout(0.3)
         self.fc1 = nn.Linear(128 * 16 * 16, 512)
-        self.fc2 = nn.Linear(512, num_classes)
+        self.fc2 = nn.Linear(512, num_classes) 
 
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))
