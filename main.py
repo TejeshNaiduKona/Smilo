@@ -2,7 +2,6 @@ import cv2
 from model import EmotionPredictor
 
 
-
 cap = cv2.VideoCapture(0)
 predictor = EmotionPredictor()
 
@@ -49,3 +48,4 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
+
