@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import pickle
 from torchvision import transforms
+
 import numpy as np
 from PIL import Image
 
@@ -14,6 +15,7 @@ class FaceClassifier(nn.Module):
         self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
         self.conv3 = nn.Conv2d(64, 128, 3, padding=1)
         self.pool = nn.MaxPool2d(2, 2)
+        
         self.dropout = nn.Dropout(0.3)
         self.fc1 = nn.Linear(128 * 16 * 16, 512)
         self.fc2 = nn.Linear(512, num_classes) 
@@ -54,3 +56,4 @@ class EmotionPredictor:
         tensor = self.transform(img).unsqueeze(0).to(self.device)
         output = self.model(tensor)
         return self.classes[output.argmax(1).item()]
+
