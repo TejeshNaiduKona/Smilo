@@ -26,7 +26,7 @@ while True:
     if frame_count % FRAME_SKIP == 0:
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         detected = face_cascade.detectMultiScale(
-            gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 301)
+            gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30)
         )
         faces = [max(detected, key=lambda r: r[2]*r[3])] if len(detected) else []
 
@@ -47,5 +47,6 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
+
 
 
