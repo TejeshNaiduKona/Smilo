@@ -49,12 +49,12 @@ class EmotionPredictor:
             transforms.ToTensor(),
             transforms.Normalize((0.5,), (0.5,))
         ])
-
     @torch.inference_mode()
     def predict(self, image_np: np.ndarray) -> str:
         img = Image.fromarray(image_np)
         tensor = self.transform(img).unsqueeze(0).to(self.device)
         output = self.model(tensor)
         return self.classes[output.argmax(1).item()]
+
 
 
