@@ -1,3 +1,17 @@
+---
+license: mit
+title: Smilo-App
+sdk: gradio
+emoji: 😃
+colorFrom: blue
+colorTo: blue
+short_description: Real-Time Emotion Detection powered by PyTorch & OpenCV
+sdk_version: 4.0.0
+python_version: '3.10'
+app_file: app.py
+pinned: false
+---
+
 # Smilo 😃
 **Real-Time Emotion Detection powered by PyTorch & OpenCV**
 

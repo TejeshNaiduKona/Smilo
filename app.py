@@ -693,4 +693,4 @@ with gr.Blocks(title="Smilo — Emotion Detection") as demo:
     )
 
 if __name__ == "__main__":
-    demo.launch(theme=theme, css=custom_css)
+    demo.launch(theme=theme, css=custom_css, ssr_mode=False)
