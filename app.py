@@ -684,8 +684,13 @@ with gr.Blocks(title="Smilo — Emotion Detection") as demo:
         inputs=[image_input],
         outputs=[image_output, result_html],
     )
-
-
+    # Live webcam stream
+    image_input.stream(
+        fn=predict_emotion,
+        inputs=[image_input],
+        outputs=[image_output, result_html],
+        stream_every=0.2,
+    )
 
 if __name__ == "__main__":
     demo.launch(theme=theme, css=custom_css)

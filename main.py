@@ -13,7 +13,7 @@ if face_cascade.empty():
 
 FRAME_SKIP = 2
 frame_count = 0
-faces = []
+current_faces = []
 
 
 while True:
@@ -28,12 +28,19 @@ while True:
         detected = face_cascade.detectMultiScale(
             gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30)
         )
-        faces = [max(detected, key=lambda r: r[2]*r[3])] if len(detected) else []
+        current_faces = []
+        if len(detected) > 0:
+            x, y, w, h = max(detected, key=lambda r: r[2]*r[3])
+            
+            y1, y2 = max(0, y), min(frame.shape[0], y + h)
+            x1, x2 = max(0, x), min(frame.shape[1], x + w)
+            
+            if y2 > y1 and x2 > x1:
+                face_rgb = cv2.cvtColor(frame[y1:y2, x1:x2], cv2.COLOR_BGR2RGB)
+                label = predictor.predict(face_rgb)
+                current_faces.append((x, y, w, h, label))
 
-    for (x, y, w, h) in faces:
-        face_rgb = cv2.cvtColor(frame[y:y+h, x:x+w], cv2.COLOR_BGR2RGB)
-        label = predictor.predict(face_rgb)
-
+    for (x, y, w, h, label) in current_faces:
         cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
         cv2.putText(
             frame, label, (x, y - 10),
@@ -43,6 +50,8 @@ while True:
     cv2.imshow("Emotion Detection", frame)
 
     if cv2.waitKey(1) & 0xFF == ord("q"):
+        break
+    if cv2.getWindowProperty("Emotion Detection", cv2.WND_PROP_VISIBLE) < 1:
         break
 
 cap.release()
