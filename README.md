@@ -65,4 +65,4 @@ If you wish to augment the model or train it from scratch:
 Ensure you have adequate lighting and a clear, frontal view of your face for the most accurate predictions!
 
 ## License
-See the LICENSE file for details.
+See the LICENSE file for details."" 
