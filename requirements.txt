@@ -4,4 +4,4 @@ numpy>=1.24.3
 opencv-python-headless>=4.8.1
 pillow>=10.0.0
 matplotlib>=3.7.2
-gradio>=5.0.0
+gradio>=5.15.0
